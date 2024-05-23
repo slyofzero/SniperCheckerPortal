@@ -6,8 +6,7 @@ import { executeStep } from "../executeStep";
 import { CommandContext, Context } from "grammy";
 import { tokenSymbol, tokenThreshold } from "@/utils/constants";
 import { ETH_SNIPER_CHANNEL, SOL_SNIPER_CHANNEL } from "@/utils/env";
-import { getDocument } from "@/firebase";
-import { StoredWallet } from "@/types";
+import { wallets } from "@/vars/wallets";
 
 export function initiateBotCommands() {
   teleBot.api.setMyCommands([
@@ -36,22 +35,16 @@ export function initiateBotCommands() {
 
     if (!userJoined) return;
 
-    const userSubscription = (
-      await getDocument<StoredWallet>({
-        collectionName: "wallets",
-        queries: [
-          ["userId", "==", member.id],
-          ["verified", "==", true],
-        ],
-      })
-    ).at(0);
+    const userSubscription = wallets.some(
+      ({ userId, verified }) => userId === member.id && verified
+    );
 
     const shouldBanUser =
       isPrivateChannel && !member.is_bot && !userSubscription;
 
     if (shouldBanUser) {
       ctx.banChatMember(member.id).catch((e) => errorHandler(e));
-      log(`Banned ${member.id}`);
+      log(`Banned ${member.id} from ${channelId}`);
     }
   });
 

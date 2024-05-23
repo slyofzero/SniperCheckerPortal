@@ -36,7 +36,7 @@ export async function verify(ctx: CommandContext<Context>) {
       const { wallet } = userWallet;
       const balance = await getTokenBalance(wallet);
 
-      if (!(balance >= tokenThreshold)) {
+      if (balance >= tokenThreshold) {
         await Promise.all([
           teleBot.api.unbanChatMember(ETH_SNIPER_CHANNEL || "", userId),
           teleBot.api.unbanChatMember(SOL_SNIPER_CHANNEL || "", userId),
