@@ -1,5 +1,5 @@
 import { updateDocumentById } from "@/firebase";
-import { ethSniperBot, solSniperBot } from "@/index";
+import { teleBot } from "@/index";
 import { StoredWallet } from "@/types";
 import { tokenSymbol, tokenThreshold } from "@/utils/constants";
 import {
@@ -8,7 +8,7 @@ import {
   SOL_CHANNEL_LINK,
   SOL_SNIPER_CHANNEL,
 } from "@/utils/env";
-import { errorHandler } from "@/utils/handlers";
+import { errorHandler, log } from "@/utils/handlers";
 import { getTokenBalance } from "@/utils/web3";
 import { syncWallets, wallets } from "@/vars/wallets";
 import { CommandContext, Context } from "grammy";
@@ -38,9 +38,10 @@ export async function verify(ctx: CommandContext<Context>) {
 
       if (!(balance >= tokenThreshold)) {
         await Promise.all([
-          ethSniperBot.unbanChatMember(ETH_SNIPER_CHANNEL || "", userId),
-          solSniperBot.unbanChatMember(SOL_SNIPER_CHANNEL || "", userId),
+          teleBot.api.unbanChatMember(ETH_SNIPER_CHANNEL || "", userId),
+          teleBot.api.unbanChatMember(SOL_SNIPER_CHANNEL || "", userId),
         ]);
+        log(`Unbanned ${userId}`);
 
         updateDocumentById<StoredWallet>({
           collectionName: "wallets",

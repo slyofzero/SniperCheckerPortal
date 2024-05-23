@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@grammyjs/chat-members':
+        specifier: ^1.1.0
+        version: 1.1.0(grammy@1.23.0)
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -150,6 +153,11 @@ packages:
   '@google-cloud/storage@7.9.0':
     resolution: {integrity: sha512-PlFl7g3r91NmXtZHXsSEfTZES5ysD3SSBWmX4iBdQ2TFH7tN/Vn/IhnVELCHtgh1vc+uYPZ7XvRYaqtDCdghIA==}
     engines: {node: '>=14'}
+
+  '@grammyjs/chat-members@1.1.0':
+    resolution: {integrity: sha512-XwPd3XVL+r43xYrBUdD2Tiu1UU4Zx9flT+Us9JW3vnepDQ4TISSQuHHPZ0TuRa69HsKXNaMt0U2H6yU34EJQ3w==}
+    peerDependencies:
+      grammy: ^1.19.0
 
   '@grammyjs/types@3.7.0':
     resolution: {integrity: sha512-/q8XVwSB7LrN1w1RSaUffO6gYyi5PHOBq1cbLHqDYiy994BxDKVD5N18viWac8Z014UGG2X+s9Fgs7cxsr0q8g==}
@@ -1638,6 +1646,10 @@ snapshots:
       - encoding
       - supports-color
     optional: true
+
+  '@grammyjs/chat-members@1.1.0(grammy@1.23.0)':
+    dependencies:
+      grammy: 1.23.0
 
   '@grammyjs/types@3.7.0': {}
 

@@ -1,19 +1,24 @@
-import { Api, Bot } from "grammy";
+import { Bot, Context, MemorySessionStorage } from "grammy";
 import { initiateBotCommands, initiateCallbackQueries } from "./bot";
 import { log } from "./utils/handlers";
-import { BOT_TOKEN, ETH_SNIPER_TOKEN, SOL_SNIPER_TOKEN } from "./utils/env";
+import { BOT_TOKEN } from "./utils/env";
 import { syncWallets } from "./vars/wallets";
+import { chatMembers, type ChatMembersFlavor } from "@grammyjs/chat-members";
+import { ChatMember } from "grammy/types";
 
-export const teleBot = new Bot(BOT_TOKEN || "");
-export const ethSniperBot = new Api(ETH_SNIPER_TOKEN || "");
-export const solSniperBot = new Api(SOL_SNIPER_TOKEN || "");
+type MyContext = Context & ChatMembersFlavor;
+const adapter = new MemorySessionStorage<ChatMember>();
+export const teleBot = new Bot<MyContext>(BOT_TOKEN || "");
 log("Bot instance ready");
+teleBot.use(chatMembers(adapter));
 
 // Check for new transfers at every 20 seconds
 // const interval = 20;
 
 (async function () {
-  teleBot.start();
+  teleBot.start({
+    allowed_updates: ["chat_member", "message", "callback_query"],
+  });
   log("Telegram bot setup");
   initiateBotCommands();
   initiateCallbackQueries();
