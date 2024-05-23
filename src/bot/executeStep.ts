@@ -1,12 +1,18 @@
 import { CallbackQueryContext, CommandContext, Context } from "grammy";
 import { log } from "@/utils/handlers";
 import { userState } from "@/vars/userState";
-import { setDuration, setTeamA, setTeamB } from "./commands/match";
+import {
+  walletCreate,
+  walletImport,
+  walletMnemonic,
+  walletSaved,
+} from "./actions/wallet";
 
 const steps: { [key: string]: any } = {
-  setTeamA,
-  setTeamB,
-  setDuration,
+  walletCreate,
+  walletSaved,
+  walletImport,
+  walletMnemonic,
 };
 
 export async function executeStep(

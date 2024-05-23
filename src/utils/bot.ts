@@ -1,7 +1,3 @@
-import { InlineKeyboard } from "grammy";
-import { advertisements } from "@/vars/advertisements";
-import { BOT_URL } from "./env";
-
 // eslint-disable-next-line
 export function cleanUpBotMessage(text: any) {
   text = String(text);
